@@ -1,0 +1,23 @@
+- hosts: localhost
+  connection: local
+  remote_user: root
+  sudo: yes
+  tasks:
+
+  - name: OSのタイムゾーンをJSTに変更。
+  # OSのタイムゾーンをJSTに変更。
+    shell: cp -p  /usr/share/zoneinfo/Japan /etc/localtime
+
+  - name: EPELとRemiのレポジトリをインストールする。
+  # EPEL/Remiのレポジトリをインストールする
+    yum: name={{ item }}
+    with_items:
+      - http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+      - http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+
+  - name: 明示的に指定したいのでEPELとRemiのレポジトリのenabledは全て0にする。
+  # 明示的に指定したいのでenabledは全て0にする
+    replace: dest=/etc/yum.repos.d/{{ item }} regexp="enabled *= *1" replace="enabled=0"
+    with_items:
+      - epel.repo
+      - remi.repo
