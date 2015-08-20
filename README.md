@@ -1,2 +1,2 @@
-# external-repo
-CentOS6.x external repository (EPEL &amp; REMI)
+# external-repo (epel,remi)
+Install external repository on CentOS6.x (epel,remi)
